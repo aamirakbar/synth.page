@@ -481,7 +481,7 @@
         <button class="btn primary" id="shareBtn">
           <span>📋</span> Share
         </button>
-        <a class="btn" href="https://github.com/aamirakbar/synth.page" target="_blank">
+        <a class="btn" href="https://github.com/aamirakbar/synth.page" target="_blank" rel="noopener noreferrer">
           <span>⭐</span> GitHub
         </a>
       </div>
@@ -698,13 +698,13 @@
       masterGain.connect(audioContext.destination);
     }
 
-    function generateImpulseResponse(ctx, duration = 2, decay = 2) {
+    function generateImpulseResponse(ctx, duration = 2, decayRate = 2) {
       const length = ctx.sampleRate * duration;
       const buffer = ctx.createBuffer(2, length, ctx.sampleRate);
       for (let ch = 0; ch < 2; ch++) {
         const data = buffer.getChannelData(ch);
         for (let i = 0; i < length; i++) {
-          data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, decay);
+          data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, decayRate);
         }
       }
       return buffer;
@@ -1003,7 +1003,7 @@
       
       updateTitle();
       
-      const stepDuration = (60 / state.bpm) * 250; // 16th note in ms
+      const stepDuration = (60 / state.bpm) * 250; // Duration per step in ms (16 steps = 4 beats)
       
       intervalId = setInterval(() => {
         playStep(currentStep);
